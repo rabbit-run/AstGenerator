@@ -8,9 +8,9 @@ abstract class AstNode {
 }
 
 class Program extends AstNode {
-  FunDefListHead _raw;
+  FunDefList _raw;
   List<FunDef> _functions;
-  Program(Location loc, FunDefListHead raw) {
+  Program(Location loc, FunDefList raw) {
     super(loc); _raw = raw; _functions = null;
   }
   Object accept(Visitor visitor) { return visitor.visit(this); }
@@ -22,15 +22,16 @@ class FunDef extends AstNode {
   Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 
-class FunDefListHead extends AstNode {
+class FunDefList extends AstNode {
   FunDef _first;
   FunDefListTail _tail;
-  FunDefListHead(Location loc) { super(loc); _first = null; _tail = null; }
-  FunDefListHead(Location loc, FunDef first, FunDefListTail tail) {
+  FunDefList(Location loc) { super(loc); _first = null; _tail = null; }
+  FunDefList(Location loc, FunDef first, FunDefListTail tail) {
     super(loc); _first = first; _tail = tail;
   }
   Object accept(Visitor visitor) { return visitor.visit(this); }
 }
+
 class FunDefListTail extends AstNode {
   List<FunDef> _inh;
   FunDef _next;
@@ -40,6 +41,15 @@ class FunDefListTail extends AstNode {
     super(loc); _next = next; _tail = tail;
   }
   Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
+class Type extends AstNode {
+    FunDefList _raw;
+    
+    Type(Location loc, FunDefList raw) {
+      super(loc);
+    }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 
 class FunId extends AstNode {

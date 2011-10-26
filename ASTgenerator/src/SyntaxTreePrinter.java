@@ -58,7 +58,7 @@ class SyntaxTreePrinter extends Visitor {
     return begin(ast).p(ast._name).end(ast);
   }
 
-  Object visit(FunDefListHead ast) {
+  Object visit(FunDefList ast) {
     begin(ast);
     if (null != ast._first)
       p(ast._first).p(ast._tail);

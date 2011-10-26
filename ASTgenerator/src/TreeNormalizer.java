@@ -15,7 +15,7 @@ class TreeNormalizer extends Visitor {
     return ast;
   }
 
-  Object visit(FunDefListHead ast) {
+  Object visit(FunDefList ast) {
     List<FunDef> result = new ArrayList<FunDef>();
     if (null == ast._first)
       return result;
