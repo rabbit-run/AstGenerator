@@ -30,7 +30,7 @@ class CallActuals extends Expr {
     List<Expr> _exprs;
     ExprList _raw;
     CallActuals(Location loc, ExprList exprList) {
-        super(loc); exprList = _raw;
+        super(loc); _raw = exprList;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }

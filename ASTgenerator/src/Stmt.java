@@ -51,6 +51,9 @@ class StmtList extends Stmt {
     StmtList(Location loc, Stmt stmt, StmtListTail tail) {
         super(loc); _first = stmt; _tail = tail;
     }
+    StmtList(Location loc) {
+        super(loc); _first = null; _tail = null;
+    }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 

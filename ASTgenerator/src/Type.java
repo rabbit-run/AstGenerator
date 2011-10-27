@@ -27,7 +27,7 @@ class FunType extends Type {
     RecordType _args;
     Type _returnType;
     
-    FunType(Location loc, Type type, RecordType args) {
+    FunType(Location loc, RecordType args, Type type) {
         super(loc);
         _returnType = type;
         _args = args;
@@ -53,6 +53,11 @@ class FieldTypeList extends Type {
         super(loc);
         _first = first;
         _tail = tail;
+    }
+    FieldTypeList(Location loc) {
+        super(loc);
+        _first = null;
+        _tail = null;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
