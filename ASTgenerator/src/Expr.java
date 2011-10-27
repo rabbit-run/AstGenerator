@@ -17,19 +17,20 @@ abstract class Expr extends AstNode{
 }
 
 class CallExpr extends Expr {
+    List<Expr> _exprs;
     FunId _id;
     CallActuals _call;
     CallExpr(Location loc, FunId id, CallActuals call) {
-        super(loc); _id = id; _call = call;
+        super(loc); _id = id; _call = call; _exprs = null;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 
 class CallActuals extends Expr {
-    FunId _id;
-    CallActuals _CallActuals;
-    CallActuals(Location loc, FunId id, CallActuals CallActuals) {
-        super(loc); _id = id; _CallActuals = CallActuals;
+    List<Expr> _exprs;
+    ExprList _raw;
+    CallActuals(Location loc, ExprList exprList) {
+        super(loc); exprList = _raw;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
@@ -37,6 +38,24 @@ class CallActuals extends Expr {
 class FunId extends Expr {
     String _id;
     FunId(Location loc, String id) { super(loc); _id = id; }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
+class StringLit extends Expr {
+    String _value;
+    StringLit(Location loc, String value) { super(loc); _value = value; }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
+class IntLit extends Expr {
+    String _value;
+    IntLit(Location loc, String value) { super(loc); _value = value; }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
+class BoolLit extends Expr {
+    String _value;
+    BoolLit(Location loc, String value) { super(loc); _value = value; }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 

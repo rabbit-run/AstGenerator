@@ -16,127 +16,127 @@ body {
 option parser(TackParser);
 
 // ---------------- top-level ----------------
-public AstNode program = WS f:funDefList EOF {yyValue = new Pogram(l(yyStart), f)};
+public AstNode program = WS f:funDefList EOF {yyValue = new Pogram(l(yyStart), f);};
 
 FunDef funDef = n:funId EQ FUN t:funType s:blockStmt
-    {yyValue = new FunDef(l(yyStart), n, t, s)};
+    {yyValue = new FunDef(l(yyStart), n, t, s);};
 
 FunDefList funDefList = f:funDef t:funDefListTail
-    {new FunDefList(l(yyStart), f, t)};
+    {new FunDefList(l(yyStart), f, t);};
 FunDefListTail funDefListTail =
-    f:funDef t:funDefListTail {yyValue = new FunDefListTail(l(yyStart), f, t)}
-  / /*empty*/ {new FunDefListTail(l(yyStart))};
+    f:funDef t:funDefListTail {yyValue = new FunDefListTail(l(yyStart), f, t);}
+  / /*empty*/ {new FunDefListTail(l(yyStart));};
 
 // ---------------- types ----------------
-Type type = a:arrayType {yyValue = new Type(l(yyStart),a)}
-           / r:recordType {yyValue = new Type(l(yyStart),r)}
-           / b:boolType {yyValue = new Type(l(yyStart),b)}
-           / i:intType {yyValue = new Type(l(yyStart),i)}
-           / s:stringType {yyValue = new Type(l(yyStart),s)};
+Type type = a:arrayType {yyValue = a}
+           / r:recordType {yyValue = r}
+           / b:boolType {yyValue = b}
+           / i:intType {yyValue = i}
+           / s:stringType {yyValue = s};
 
-ArrayType arrayType = l:LBRACKET t:type r:RBRACKET {yyValue = new ArrayType(l(yyStart),l,t,r)};
+ArrayType arrayType = LBRACKET t:type RBRACKET {yyValue = new ArrayType(l(yyStart),t);};
 
-RevordType recordType = l:LPAREN f:fieldTypeList r:RPAREN
-    {yyValue = new RevordType(l(yyStart),l,f,r)};
+RecordType recordType = LPAREN f:fieldTypeList RPAREN
+    {yyValue = new RevordType(l(yyStart),f);};
 
 FieldTypeList fieldTypeList =
-    f:fieldType t:fieldTypeListTail {yyValue = new FieldTypeList(l(yyStart), f, t)}
-  / /*empty*/ {yyValue = new FieldTypeList(l(yyStart))};
+    f:fieldType t:fieldTypeListTail {yyValue = new FieldTypeList(l(yyStart), f, t);}
+  / /*empty*/ {yyValue = new FieldTypeList(l(yyStart));};
 FieldTypeListTail fieldTypeListTail =
-    c:COMMA f:fieldType t:fieldTypeListTail {yyValue = new FieldTypeListTail(l(yyStart),c,f,t)}
-  / /*empty*/ {yyValue = new FieldTypeListTail(l(yyStart))};
+    COMMA f:fieldType t:fieldTypeListTail {yyValue = new FieldTypeListTail(l(yyStart),f,t);}
+  / /*empty*/ {yyValue = new FieldTypeListTail(l(yyStart));};
 
-FieldType fieldType = f:fieldId c:COLON t:type {yyValue = new FieldType(l(yyStart),f,c,t)};
+FieldType fieldType = f:fieldId COLON t:type {yyValue = new FieldType(l(yyStart),f,t);};
 
-BoolType boolType = b:BOOL {yyValue = new BoolType(l(yyStart),b)};
-IntType intType = i:INT {yyValue = new IntType(l(yyStart),i)};
-StringType stringType = s:STRING {yyValue = new StringType(l(yyStart),i)};
+PrimitiveType boolType = b:BOOL {yyValue = new PrimitiveType(l(yyStart),b);};
+PrimitiveType intType = i:INT {yyValue = new PrimitiveType(l(yyStart),i);};
+PrimitiveType stringType = s:STRING {yyValue = new PrimitiveType(l(yyStart),s);};
 
-FunType funType = r:recordType a:ARROW re:returnType
-    {yyValue = new FunType(l(yyStart),r,a,re)};
+FunType funType = r:recordType ARROW re:returnType
+    {yyValue = new FunType(l(yyStart),r,re);};
 
-ReturnType returnType = t:type {yyValue = new ReturnType(l(yyStart), t)} 
-                 /v:voidType {yyValue = new ReturnType(l(yyStart), v)};
+ReturnType returnType = t:type {yyValue = new ReturnType(l(yyStart), t);} 
+                 /v:voidType {yyValue = new ReturnType(l(yyStart), v);};
 
-VoidType voidType = v:VOID {yyValue = new VoidType(l(yyStart),v)};
+VoidType voidType = v:VOID {yyValue = new VoidType(l(yyStart),v);};
 
 // ---------------- statements ----------------
-Stmt stmt = v:varDef { yyValue = new Stmt(l(yyStart),v)}
-          / a:assignStmt { yyValue = new Stmt(l(yyStart),a)}
-          / b:blockStmt { yyValue = new Stmt(l(yyStart),b)}
-          / c:callStmt { yyValue = new Stmt(l(yyStart),c)}
-          / f:forStmt { yyValue = new Stmt(l(yyStart),f)}
-          / i:ifStmt { yyValue = new Stmt(l(yyStart),i)}
-          / r:returnStmt { yyValue = new Stmt(l(yyStart),r)}
-          / w:whileStmt { yyValue = new Stmt(l(yyStart),w)} ;
+Stmt stmt = v:varDef { yyValue = new Stmt(l(yyStart),v);}
+          / a:assignStmt { yyValue = new Stmt(l(yyStart),a);}
+          / b:blockStmt { yyValue = new Stmt(l(yyStart),b);}
+          / c:callStmt { yyValue = new Stmt(l(yyStart),c);}
+          / f:forStmt { yyValue = new Stmt(l(yyStart),f);}
+          / i:ifStmt { yyValue = new Stmt(l(yyStart),i);}
+          / r:returnStmt { yyValue = new Stmt(l(yyStart),r);}
+          / w:whileStmt { yyValue = new Stmt(l(yyStart),w);} ;
 
-VarDef varDef = v:varId e:EQ ex:expr s:SEMI { yyValue = new VarDef(l(yyStart),v,e,ex,s)};
-AssignStmt assignStmt = e1:expr c:COLONEQ e2:expr s:SEMI { yyValue = new AssignStmt(l(yyStart),e1,c,e2,s)};
-BlockStmt blockStmt = l:LCURLY s:stmtList r:RCURLY 
-    { yyValue = new BlockStmt(l(yyStart),l,s,r)};
+VarDef varDef = v:varId EQ ex:expr SEMI { yyValue = new VarDef(l(yyStart),v,ex);};
+AssignStmt assignStmt = e1:expr COLONEQ e2:expr SEMI { yyValue = new AssignStmt(l(yyStart),e1,e2);};
+BlockStmt blockStmt = LCURLY s:stmtList RCURLY 
+    { yyValue = new BlockStmt(l(yyStart),s);};
 CallStmt callStmt = c:callExpr SEMI {yyValue = new CallStmt(l(yyStart)),c};
 ForStmt forStmt = FOR v:varId IN e:expr b:blockStmt
-    {yyValue = new ForStmt(l(yyStart),v,e,b)};
+    {yyValue = new ForStmt(l(yyStart),v,e,b);};
 
 IfStmt ifStmt =
-    IF e:expr b1:blockStmt ELSE b2:blockStmt {yyValue = new IfStmt(l(yyStart),e,b1,b2)}
-  / IF e:expr b:blockStmt{yyValue = new IfStmt(l(yyStart),e,b)};
+    IF e:expr b1:blockStmt ELSE b2:blockStmt {yyValue = new IfStmt(l(yyStart),e,b1,b2);}
+  / IF e:expr b:blockStmt{yyValue = new IfStmt(l(yyStart),e,b);};
 
 ReturnStmt returnStmt =
-    ARROW e:expr SEMI {yyValue = new ReturnStmt(l(yyStart), e)}
-  / ARROW SEMI {yyValue = new ReturnStmt(l(yyStart))};
+    ARROW e:expr SEMI {yyValue = new ReturnStmt(l(yyStart), e);}
+  / ARROW SEMI {yyValue = new ReturnStmt(l(yyStart));};
 
-WhileStmt whileStmt = WHILE e:expr b:blockStmt {yyValue = new WhileStmt(l(yyStart),e,b)};
+WhileStmt whileStmt = WHILE e:expr b:blockStmt {yyValue = new WhileStmt(l(yyStart),e,b);};
 
 StmtList stmtList =
-    s:stmt t:stmtListTail {yyValue = new StmtList(l(yyStart),s,t)}
-  / /*empty*/ {yyValue = new StmtList(l(yyStart))};
+    s:stmt t:stmtListTail {yyValue = new StmtList(l(yyStart),s,t);}
+  / /*empty*/ {yyValue = new StmtList(l(yyStart));};
 StmtListTail stmtListTail =
-    s:stmt t:stmtListTail {yyValue = new StmtListTail(l(yyStart),s,t)}
-  / /*empty*/{yyValue = new StmtListTail(l(yyStart))};
+    s:stmt t:stmtListTail {yyValue = new StmtListTail(l(yyStart),s,t);}
+  / /*empty*/{yyValue = new StmtListTail(l(yyStart));};
 
 // ---------------- expressions ----------------
-voExprid expr = l:logicOrExpr {yyValue = new Expr(l(yyStart),l)};
+Expr expr = l:logicOrExpr {yyValue = new Expr(l(yyStart),l);};
 
 LogicOrExpr logicOrExpr = a:logicAndExpr o:logicOrExprTail 
-    {yyValue = new LogicOrExpr(l(yyStart),a,o)};
+    {yyValue = new LogicOrExpr(l(yyStart),a,o);};
 LogicOrExprTail logicOrExprTail =
-    LOGIC_OR_OP a:logicAndExpr o:logicOrExprTail {yyValue = new LogicOrExprTail(l(yyStart),a,o)};
-  / /*empty*/ {yyValue = new LogicOrExprTail(l(yyStart))};
+    LOGIC_OR_OP a:logicAndExpr o:logicOrExprTail {yyValue = new LogicOrExprTail(l(yyStart),a,o);};
+  / /*empty*/ {yyValue = new LogicOrExprTail(l(yyStart));};
 
 LogicAndExpr logicAndExpr = e:eqExpr a:logicAndExprTail
-    {yyValue = new LogicAndExpr(l(yyStart), e, a)};
+    {yyValue = new LogicAndExpr(l(yyStart), e, a);};
 logicAndExprTail logicAndExprTail =
-    LOGIC_AND_OP e:eqExpr a:logicAndExprTail {yyValue = new LogicAndExpr(l(yyStart), e, a)}
-  / /*empty*/ {yyValue = new LogicAndExpr(l(yyStart))};
+    LOGIC_AND_OP e:eqExpr a:logicAndExprTail {yyValue = new LogicAndExpr(l(yyStart), e, a);}
+  / /*empty*/ {yyValue = new LogicAndExpr(l(yyStart));};
 
-EqExpr eqExpr = r:relExpr e:eqExprTail {yyValue = new EqExpr(l(yyStart),r,e)};
-EqExpr eqExprTail =
-    EQ_OP r:relExpr e:eqExprTail {yyValue = new EqExpr(l(yyStart),r,e)}
-  / /*empty*/ {yyValue = new EqExpr(l(yyStart))};
+EqExpr eqExpr = r:relExpr e:eqExprTail {yyValue = new EqExpr(l(yyStart),r,e);};
+EqExprTail eqExprTail =
+    EQ_OP r:relExpr e:eqExprTail {yyValue = new EqExprTail(l(yyStart),r,e);}
+  / /*empty*/ {yyValue = new EqExpr(l(yyStart));};
 
-RelExpr relExpr = a:addExpr e:relExprTail {yyValue = new RelExpr(l(yyStart),r,e)};
+RelExpr relExpr = a:addExpr e:relExprTail {yyValue = new RelExpr(l(yyStart),r,e);};
 RelExprTail relExprTail =
-    REL_OP a:addExpr r:relExprTail {yyValue = new RelExprTail(l(yyStart),r,e)}
-  / /*empty*/ {yyValue = new RelExprTail(l(yyStart))};
+    REL_OP a:addExpr r:relExprTail {yyValue = new RelExprTail(l(yyStart),r,e);}
+  / /*empty*/ {yyValue = new RelExprTail(l(yyStart));};
 
 AddExpr addExpr =
-    m:multExpr a:addExprTail {yyValue = new AddExpr(l(yyStart),m,a)};
+    m:multExpr a:addExprTail {yyValue = new AddExpr(l(yyStart),m,a);};
 AddExprTail addExprTail =
-    ADD_OP m:multExpr a:addExprTail {yyValue = new AddExprTail(l(yyStart),m,a)}
-  / /*empty*/ {yyValue = new AddExpr(l(yyStart))};
+    ADD_OP m:multExpr a:addExprTail {yyValue = new AddExprTail(l(yyStart),m,a);}
+  / /*empty*/ {yyValue = new AddExpr(l(yyStart));};
 
 MultExpr multExpr =
-    p:prefixExpr m:multExprTail {yyValue = new MultExpr(l(yyStart), p, m)};
+    p:prefixExpr m:multExprTail {yyValue = new MultExpr(l(yyStart), p, m);};
 MultExprTail multExprTail =
-    MULT_OP prefixExpr multExprTail {yyValue = new MultExprTail(l(yyStart), p, m)}   
-  / /*empty*/ {yyValue = new MultExprTail(l(yyStart), p, m)};
+    MULT_OP prefixExpr multExprTail {yyValue = new MultExprTail(l(yyStart), p, m);}   
+  / /*empty*/ {yyValue = new MultExprTail(l(yyStart), p, m);};
 
-PrefixEcpr prefixExpr =
-    PREFIX_OP pre:prefixExpr {yyValue = new PrefixEcpr(l(yyStart), pre)}
-  / po:postfixExpr {yyValue = new PrefixExpr(l(yyStart), po)};
+PrefixExpr prefixExpr =
+    PREFIX_OP pre:prefixExpr {yyValue = new PrefixExpr(l(yyStart), pre);}
+  / po:postfixExpr {yyValue = new PrefixExpr(l(yyStart), po);};
 
-PostfixExpr postfixExpr = pr:primExpr po:postfixExprTail {yyValue = new PostfixExpr(l(yyStart), po)};
+PostfixExpr postfixExpr = pr:primExpr po:postfixExprTail {yyValue = new PostfixExpr(l(yyStart), po);};
 
 PostfixExprTail postfixExprTail =
     call:callExprTail {yyValue = new PostfixExprTail(l(yyStart), call)
@@ -145,69 +145,69 @@ PostfixExprTail postfixExprTail =
   / s:subscriptExprTail {yyValue = new PostfixExprTail(l(yyStart), s)
   / e:emptyPostfixTail {yyValue = new PostfixExprTail(l(yyStart), e);
 
-EmptyPostfixTail emptyPostfixTail = /*empty*/ {yyValue = new EmptyPostfixTail(l(yyStart))};
+EmptyPostfixTail emptyPostfixTail = /*empty*/ {yyValue = new EmptyPostfixTail(l(yyStart));};
 
 CallExpr callExpr = f:funId c:callActuals
-    {yyValue = new CallExpr(l(yyStart), f, c)};
-CallActuals callActuals = LPAREN e:exprList RPAREN ep:emptyPostfixTail
-    {yyValue = new CallActuals(l(yyStart),e, ep)};
+    {yyValue = new CallExpr(l(yyStart), f, c);};
+CallActuals callActuals = LPAREN e:exprList RPAREN 
+    {yyValue = new CallActuals(l(yyStart),e);};
 
 CallExprTail callExprTail = LPAREN e:exprList RPAREN p:postfixExprTail
-    {yyValue = new CallExprTail(l(yyStart),e,p)};
+    {yyValue = new CallExprTail(l(yyStart),e,p);};
 CastExprTail castExprTail = COLON t:type p:postfixExprTail
-    {yyValue = new CastExprTail(l(yyStart),t,p)};
+    {yyValue = new CastExprTail(l(yyStart),t,p);};
 FieldExprTail fieldExprTail = DOT f:fieldId p:postfixExprTail
-    {yyValue = new FieldExprTail(l(yyStart), f, p)};
+    {yyValue = new FieldExprTail(l(yyStart), f, p);};
 SubScriptExprTail subscriptExprTail = LBRACKET e:expr RBRACKET p:postfixExprTail
-    {yyValue = new SubScriptExprTail(l(yyStart),e,p)};
+    {yyValue = new SubScriptExprTail(l(yyStart),e,p);};
 
 ExprList exprList =
-    e:expr l:exprListTail {yyValue = new ExprList(l(yyStart), e, l)}
-  / /*empty*/ {yyValue = new ExprList(l(yyStart))};
+    e:expr l:exprListTail {yyValue = new ExprList(l(yyStart), e, l);}
+  / /*empty*/ {yyValue = new ExprList(l(yyStart));};
 ExprListTail exprListTail =
-    COMMA e:expr l:exprListTail {yyValue = new ExprListTail(l(yyStart), e, l)}
-  / /*empty*/ {yyValue = new ExprListTail(l(yyStart)};
+    COMMA e:expr l:exprListTail {yyValue = new ExprListTail(l(yyStart), e, l);}
+  / /*empty*/ {yyValue = new ExprListTail(l(yyStart);};
 
-PrimExpr primExpr =
-    v:varId {yyValue = new PrimExpr(l(yyStart), v)}
-    / a:arrayLit 	 {yyValue = new PrimExpr(l(yyStart), a)}
-    / r:recordLit  {yyValue = new PrimExpr(l(yyStart), r)}
-    / p:parenExpr  {yyValue = new PrimExpr(l(yyStart), p)}
-    / b:boolLit    {yyValue = new PrimExpr(l(yyStart), b)}
-    / i:intLit     {yyValue = new PrimExpr(l(yyStart), i)}
-    / n:nullLit    {yyValue = new PrimExpr(l(yyStart), n)}
-    / s:stringLit  {yyValue = new PrimExpr(l(yyStart), s)};
+Expr primExpr =
+    v:varId {yyValue = new PrimExpr(l(yyStart), v);}
+    / a:arrayLit 	 {yyValue = new PrimExpr(l(yyStart), a);}
+    / r:recordLit  {yyValue = new PrimExpr(l(yyStart), r);}
+    / p:parenExpr  {yyValue = new PrimExpr(l(yyStart), p);}
+    / b:boolLit    {yyValue = new PrimExpr(l(yyStart), b);}
+    / i:intLit     {yyValue = i}
+    / n:nullLit    {yyValue = new PrimExpr(l(yyStart), n);}
+    / s:stringLit  {yyValue = s};
 
-ParenExpr parenExpr = LPAREN e:expr RPAREN {yyValue = new ParenExpr(l(yyStart),e)};
+ParenExpr parenExpr = LPAREN e:expr RPAREN {yyValue = new ParenExpr(l(yyStart),e);};
 
 // ---------------- literals ----------------
-ArrayLit arrayLit = LBRACKET e:exprList RBRACKET {yyValue = new ArrayLit(l(yyStart),e)};
+ArrayLit arrayLit = LBRACKET e:exprList RBRACKET {yyValue = new ArrayLit(l(yyStart),e);};
 
-RecordLit recordLit = LPAREN f:fieldLitList RPAREN {yyValue = new RecordLit(l(yyStart),f)};
+RecordLit recordLit = LPAREN f:fieldLitList RPAREN {yyValue = new RecordLit(l(yyStart),f);};
 
 FieldLitList fieldLitList =
-    f:fieldLit l:fieldLitListTail {yyValue = new FieldLitList(l(yyStart),f,l)};
-  / /*empty*/ {yyValue = new FieldLitList(l(yyStart))};
+    f:fieldLit l:fieldLitListTail {yyValue = new FieldLitList(l(yyStart),f,l);}
+  / /*empty*/ {yyValue = new FieldLitList(l(yyStart));};
 FieldLitListTail fieldLitListTail =
-    COMMA f:fieldLit l:fieldLitListTail {yyValue = new FieldLitListTail(l(yyStart),f,l)}
-  / /*empty*/ {yyValue = new FieldLitListTail(l(yyStart))};
+    COMMA f:fieldLit l:fieldLitListTail {yyValue = new FieldLitListTail(l(yyStart),f,l);}
+  / /*empty*/ {yyValue = new FieldLitListTail(l(yyStart));};
 
-void fieldLit = f:fieldId EQ e:expr
-    {yyValue = new FieldLit(l(yyStart),f,e)};
+FieldLit fieldLit = f:fieldId EQ e:expr
+    {yyValue = new FieldLit(l(yyStart),f,e);};
 
-void boolLit = b:BOOL_LIT WS
-    {yyValue = new BoolLit(l(yyStart), b)};
-void intLit = i:INT_LIT WS;
-    {yyValue = new IntLit(l(yyStart),i)}
-void nullLit = n:NULL_LIT WS;
-    {yyValue = new NullLit(l(yyStart),n)}
-void stringLit = s:STRING_LIT WS;
-    {yyValue = new StringLit(l(yyStart),s)}
+BoolLit boolLit = b:BOOL_LIT WS
+    {yyValue = new BoolLit(l(yyStart), b);};
+IntLit intLit = i:INT_LIT WS
+    {yyValue = new IntLit(l(yyStart),i);};
+NullLit nullLit = n:NULL_LIT WS
+    {yyValue = new NullLit(l(yyStart),n);};
+StringLit stringLit = s:STRING_LIT WS
+    {yyValue = new StringLit(l(yyStart),s);};
 
 // ---------------- identifiers ----------------
-void fieldId = i:ID {yyValue = new FieldId(l(yyStart),i)};
-void funId = i:ID {yyValue = new FunId(l(yyStart),i)};
-void varId = i:ID {yyValue = new VarId(l(yyStart),i)};
+FieldId fieldId = i:ID {yyValue = new FieldId(l(yyStart),i);};
+FunId funId = i:ID {yyValue = new FunId(l(yyStart),i);};
+VarId varId = i:ID {yyValue = new VarId(l(yyStart),i);};
 
 // ---------------- lexical ----------------
 String ID = i:ID_INTERNAL WS &{!KEYWORDS.contains(i)};

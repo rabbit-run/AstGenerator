@@ -36,10 +36,12 @@ class FunType extends Type {
 }
 
 class RecordType extends Type {
-    FieldTypeList _fieldType;
+    List<FieldType> _fieldTypes;
+    FieldTypeList _raw;
     RecordType(Location loc, FieldTypeList fieldType) {
         super(loc);
-        _fieldType = fieldType;
+        _raw = fieldType;
+        _fieldTypes = null;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }

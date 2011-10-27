@@ -1,5 +1,5 @@
 abstract class Visitor {
-  Object defaultVisit(Object ast) {
+  Object defaultVisit(AstNode ast) {
     assert false : "not implemented";
     return null;
   }
@@ -17,11 +17,11 @@ abstract class Visitor {
 //  Object visit(BoolType ast) { return defaultVisit(ast); }
 //  Object visit(IntType ast) { return defaultVisit(ast); }
 //  Object visit(StringType ast) { return defaultVisit(ast); }
-//  Object visit(FunType ast) { return defaultVisit(ast); }
+  Object visit(FunType ast) { return defaultVisit(ast); }
 //  Object visit(ReturnType ast) { return defaultVisit(ast); }
 //  Object visit(VoidType ast) { return defaultVisit(ast); }
-//  
-//  Object visit(Stmt ast) { return defaultVisit(ast); }
+  
+  Object visit(Stmt ast) { return defaultVisit(ast); }
 //  Object visit(VarDef ast) { return defaultVisit(ast); }
 //  Object visit(AssignStmt ast) { return defaultVisit(ast); }
   Object visit(BlockStmt ast) { return defaultVisit(ast); }
@@ -68,10 +68,10 @@ abstract class Visitor {
 //  Object visit(FieldLitList ast) { return defaultVisit(ast); }
 //  Object visit(FieldLitListTail ast) { return defaultVisit(ast); }
 //  Object visit(FieldLit ast) { return defaultVisit(ast); }
-//  Object visit(BoolLit ast) { return defaultVisit(ast); }
-//  Object visit(IntLit ast) { return defaultVisit(ast); }
+  Object visit(BoolLit ast) { return defaultVisit(ast); }
+  Object visit(IntLit ast) { return defaultVisit(ast); }
 //  Object visit(NullLit ast) { return defaultVisit(ast); }
-//  Object visit(StringLit ast) { return defaultVisit(ast); }
+  Object visit(StringLit ast) { return defaultVisit(ast); }
   Object visit(FieldId ast) { return defaultVisit(ast); }
   Object visit(FunId ast) { return defaultVisit(ast); }
   Object visit(PrimitiveType type) { return defaultVisit(type); }

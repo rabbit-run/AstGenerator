@@ -16,9 +16,11 @@ abstract class Stmt extends AstNode {
 }
 
 class BlockStmt extends Stmt {
-    StmtList _stmt;
+    List<Stmt> _stmts;
+    StmtList _raw;
     BlockStmt(Location loc, StmtList stmt) {
-        super(loc); _stmt = stmt;
+        super(loc); _raw = stmt;
+        _stmts = null;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
