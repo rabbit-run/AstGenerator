@@ -18,6 +18,7 @@ class Program extends AstNode {
 
 class FunDef extends AstNode {
   FunId _name;
+  FunType _type;
   FunDef(Location loc, FunId name) { super(loc); _name = name; }
   Object accept(Visitor visitor) { return visitor.visit(this); }
 }
@@ -43,17 +44,8 @@ class FunDefListTail extends AstNode {
   Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 
-class Type extends AstNode {
-    FunDefList _raw;
-    
-    Type(Location loc, FunDefList raw) {
-      super(loc);
-    }
-    Object accept(Visitor visitor) { return visitor.visit(this); }
-}
-
-class FunId extends AstNode {
+class FieldId extends AstNode {
   String _id;
-  FunId(Location loc, String id) { super(loc); _id = id; }
+  FieldId(Location loc, String id) { super(loc); _id = id; }
   Object accept(Visitor visitor) { return visitor.visit(this); }
 }
