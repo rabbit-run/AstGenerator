@@ -92,7 +92,13 @@ class TreeNormalizer extends Visitor {
     Object visit(Stmt ast) {
         return ast.accept(this);
     }
-
+    
+    Object visit(VarDef ast) {
+        ast._id = (VarId) ast._id.accept(this);
+        ast._expr = (Expr) ast._expr.accept(this);
+        return ast;
+    }
+    
     Object visit(StmtList ast) {
         List<Stmt> result = new ArrayList<Stmt>();
         if (null == ast._first)
@@ -121,6 +127,10 @@ class TreeNormalizer extends Visitor {
     }
     
 //------------------------Expr---------------------------------
+    Object visit(Expr ast) {
+        return ast.accept(this);
+    }
+    
     Object visit(CallExpr ast) {
         ast._id = (FunId) ast._id.accept(this);
         ast._exprs = (List<Expr>)ast._call.accept(this);
@@ -153,6 +163,132 @@ class TreeNormalizer extends Visitor {
         return ast._tail.accept(this);
     }
     
+//    Object visit(LogicOrExpr ast) {
+//        if (ast._tail == null) {
+//            return ast._andExpr;
+//        }
+//        ast._tail._head = ast._andExpr;
+//        return ast._tail.accept(this);
+//    }
+//    
+//    Object visit(LogicOrExprTail ast) {
+//        if (ast._andExpr == null) {
+//            return ast._head;
+//        }
+//        ast._andExpr = (Expr) ast._andExpr.accept(this);
+//        ast._head = new InfixExpr(null, "*", (Expr)ast._head, 
+//                (Expr)ast._andExpr);
+//        if (ast._tail == null) {
+//            return ast._head;
+//        }
+//        return new InfixExpr(null, "*", (Expr)ast._head, (Expr)ast._tail.accept(this));
+//    }
+//    
+//    Object visit(LogicAndExpr ast) {
+//        if (ast._tail == null) {
+//            return ast._eqExpr;
+//        }
+//        ast._tail._head = ast._eqExpr;
+//        return ast._tail.accept(this);
+//    }
+//    
+//    Object visit(LogicAndExprTail ast) {
+//        if (ast._eqExpr == null) {
+//            return ast._head;
+//        }
+//        ast._eqExpr = (Expr) ast._eqExpr.accept(this);
+//        ast._head = new InfixExpr(null, "*", (Expr)ast._head, 
+//                (Expr)ast._eqExpr);
+//        if (ast._tail == null) {
+//            return ast._head;
+//        }
+//        return new InfixExpr(null, "*", (Expr)ast._head, (Expr)ast._tail.accept(this));
+//    }
+//    
+//    Object visit(EqExpr ast) {
+//        if (ast._tail == null) {
+//            return ast._relExpr;
+//        }
+//        ast._tail._head = ast._relExpr;
+//        return ast._tail.accept(this);
+//    }
+//    
+//    Object visit(EqExprTail ast) {
+//        if (ast._relExpr == null) {
+//            return ast._head;
+//        }
+//        ast._relExpr = (Expr) ast._relExpr.accept(this);
+//        ast._head = new InfixExpr(null, "*", (Expr)ast._head, 
+//                (Expr)ast._relExpr);
+//        if (ast._tail == null) {
+//            return ast._head;
+//        }
+//        return new InfixExpr(null, "*", (Expr)ast._head, (Expr)ast._tail.accept(this));
+//    }
+//    
+//    Object visit(RelExpr ast) {
+//        if (ast._tail == null) {
+//            return ast._addExpr;
+//        }
+//        ast._tail._head = ast._addExpr;
+//        return ast._tail.accept(this);
+//    }
+//    
+//    Object visit(RelExprTail ast) {
+//        if (ast._addExpr == null) {
+//            return ast._head;
+//        }
+//        ast._addExpr = (Expr) ast._addExpr.accept(this);
+//        ast._head = new InfixExpr(null, "*", (Expr)ast._head, 
+//                (Expr)ast._addExpr);
+//        if (ast._tail == null) {
+//            return ast._head;
+//        }
+//        return new InfixExpr(null, "*", (Expr)ast._head, (Expr)ast._tail.accept(this));
+//    }
+    
+    Object visit(AddExpr ast) {
+        if (ast._tail == null) {
+            return ast._multExpr.accept(this);
+        }
+        ast._tail._head = (Expr) ast._multExpr.accept(this);
+        return ast._tail.accept(this);
+    }
+    
+    Object visit(AddExprTail ast) {
+        if (ast._multExpr == null) {
+            return ast._head;
+        }
+        ast._multExpr = (Expr)ast._multExpr.accept(this);
+        ast._tail._head = new InfixExpr(null, ast._op, (Expr)ast._head, 
+                (Expr)ast._multExpr);
+        if (ast._tail == null) {
+            return ast._head;
+        }
+        return ast._tail.accept(this);
+    }
+    
+    Object visit(MultExpr ast) {
+        if (ast._tail == null) {
+            return ast._prefixExpr.accept(this);
+        }
+        ast._tail._head = (Expr) ast._prefixExpr.accept(this);
+        return ast._tail.accept(this);
+    }
+    
+    Object visit(MultExprTail ast) {
+        if (ast._prefixExpr == null) {
+            return ast._head;
+        }
+        ast._prefixExpr = (PrimExpr) ast._prefixExpr.accept(this);
+        ast._tail._head = new InfixExpr(null, ast._op, (Expr)ast._head, 
+                (Expr)ast._prefixExpr);
+        if (ast._tail == null) {
+            return ast._head;
+        }
+        return ast._tail.accept(this);
+    }
+    
     Object visit(StringLit ast) {
         return ast;
     }
@@ -162,6 +298,10 @@ class TreeNormalizer extends Visitor {
     }
     
     Object visit(BoolLit ast) {
+        return ast;
+    }
+    
+    Object visit(VarId ast) {
         return ast;
     }
 }

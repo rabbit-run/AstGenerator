@@ -22,7 +22,7 @@ abstract class Visitor {
 //  Object visit(VoidType ast) { return defaultVisit(ast); }
   
   Object visit(Stmt ast) { return defaultVisit(ast); }
-//  Object visit(VarDef ast) { return defaultVisit(ast); }
+  Object visit(VarDef ast) { return defaultVisit(ast); }
 //  Object visit(AssignStmt ast) { return defaultVisit(ast); }
   Object visit(BlockStmt ast) { return defaultVisit(ast); }
   Object visit(CallStmt ast) { return defaultVisit(ast); }
@@ -35,20 +35,19 @@ abstract class Visitor {
   Object visit(StmtListTail ast) { return defaultVisit(ast); }
 //  
 //  
-//  Object visit(Expr ast) { return defaultVisit(ast); }
-//  Object visit(LogicOrExpr ast) { return defaultVisit(ast); }
-//  Object visit(LogicOrExprTail ast) { return defaultVisit(ast); }
-//  Object visit(LogicAndExpr ast) { return defaultVisit(ast); }
-//  Object visit(logicAndExprTail ast) { return defaultVisit(ast); }
-//  Object visit(EqExpr ast) { return defaultVisit(ast); }
-//  Object visit(EqExprTail ast) { return defaultVisit(ast); }
-//  Object visit(RelExpr ast) { return defaultVisit(ast); }
-//  Object visit(RelExprTail ast) { return defaultVisit(ast); }
-//  Object visit(AddExpr ast) { return defaultVisit(ast); }
-//  Object visit(AddExprTail ast) { return defaultVisit(ast); }
-//  Object visit(MultExpr ast) { return defaultVisit(ast); }
-//  Object visit(MultExprTail ast) { return defaultVisit(ast); }
-//  Object visit(PrefixExpr ast) { return defaultVisit(ast); }
+  Object visit(Expr ast) { return defaultVisit(ast); }
+  Object visit(LogicOrExpr ast) { return defaultVisit(ast); }
+  Object visit(LogicOrExprTail ast) { return defaultVisit(ast); }
+  Object visit(LogicAndExpr ast) { return defaultVisit(ast); }
+  Object visit(LogicAndExprTail ast) { return defaultVisit(ast); }
+  Object visit(RelExpr ast) { return defaultVisit(ast); }
+  Object visit(EqExprTail ast) { return defaultVisit(ast); }
+  Object visit(RelExprTail ast) { return defaultVisit(ast); }
+  Object visit(AddExpr ast) { return defaultVisit(ast); }
+  Object visit(AddExprTail ast) { return defaultVisit(ast); }
+  Object visit(MultExpr ast) { return defaultVisit(ast); }
+  Object visit(MultExprTail ast) { return defaultVisit(ast); }
+  Object visit(PrefixExpr ast) { return defaultVisit(ast); }
 //  Object visit(PostfixExpr ast) { return defaultVisit(ast); }
 //  Object visit(PostfixExprTail ast) { return defaultVisit(ast); }
 //  Object visit(EmptyPostfixTail ast) { return defaultVisit(ast); }
@@ -74,8 +73,7 @@ abstract class Visitor {
   Object visit(StringLit ast) { return defaultVisit(ast); }
   Object visit(FieldId ast) { return defaultVisit(ast); }
   Object visit(FunId ast) { return defaultVisit(ast); }
+  Object visit(VarId ast) { return defaultVisit(ast); }
   Object visit(PrimitiveType type) { return defaultVisit(type); }
-  
-  
-//  Object visit(FunId ast) { return defaultVisit(ast); }
+  Object visit(InfixExpr ast) { return defaultVisit(ast); }
 }

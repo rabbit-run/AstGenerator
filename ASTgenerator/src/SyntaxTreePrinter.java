@@ -129,6 +129,10 @@ class SyntaxTreePrinter extends Visitor {
     Object visit(FunId ast) {
         return begin(ast, ast._id).end(ast);
     }
+    
+    Object visit(VarId ast) {
+        return begin(ast, ast._name).end(ast);
+    }
 
     Object visit(CallExpr ast) {
         begin(ast);
@@ -180,7 +184,143 @@ class SyntaxTreePrinter extends Visitor {
         return begin(ast, ast._value).end(ast);
     }
     
+ // -----------------Infix Expr--------------------------
+    Object visit(InfixExpr ast) {
+        begin(ast, ast._op);
+        if (ast._lhs != null)
+            p(ast._lhs);
+        if (ast._rhs != null)
+            p(ast._rhs);
+        return end(ast);
+    }
+    
+    Object visit(LogicOrExpr ast) {
+        begin(ast);
+        if (ast._andExpr != null)
+            p(ast._andExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(LogicOrExprTail ast) {
+        begin(ast);
+        if (ast._andExpr != null)
+            p(ast._andExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(LogicAndExpr ast) {
+        begin(ast);
+        if (ast._eqExpr != null)
+            p(ast._eqExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(LogicAndExprTail ast) {
+        begin(ast);
+        if (ast._eqExpr != null)
+            p(ast._eqExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(EqExpr ast) {
+        begin(ast);
+        if (ast._relExpr != null)
+            p(ast._relExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(EqExprTail ast) {
+        begin(ast);
+        if (ast._relExpr != null)
+            p(ast._relExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(RelExpr ast) {
+        begin(ast);
+        if (ast._addExpr != null)
+            p(ast._addExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(RelExprTail ast) {
+        begin(ast);
+        if (ast._addExpr != null)
+            p(ast._addExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(AddExpr ast) {
+        begin(ast);
+        if (ast._multExpr != null)
+            p(ast._multExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(AddExprTail ast) {
+        begin(ast);
+        if (ast._multExpr != null)
+            p(ast._multExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(MultExpr ast) {
+        begin(ast);
+        if (ast._prefixExpr != null)
+            p(ast._prefixExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
+    
+    Object visit(MultExprTail ast) {
+        begin(ast);
+        if (ast._prefixExpr != null)
+            p(ast._prefixExpr);
+        if (ast._tail != null) {
+            p(ast._tail);
+        }
+        return end(ast);
+    }
     //----------------Stmt---------------------------
+    Object visit(VarDef ast) {
+        begin(ast);
+        p(ast._id);
+        p(ast._expr);
+        return end(ast);
+    }
+    
     Object visit(BlockStmt ast) {
         begin(ast);
         if (null != ast._raw) {

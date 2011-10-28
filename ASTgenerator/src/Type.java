@@ -11,7 +11,6 @@ import xtc.tree.Location;
  */
 abstract class Type extends AstNode{
     Type(Location loc) { super(loc); }
-    abstract Object accept(Visitor visitor);
 }
 
 class ArrayType extends Type {

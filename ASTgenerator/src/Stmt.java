@@ -12,8 +12,20 @@ abstract class Stmt extends AstNode {
     Stmt(Location loc) {
         super(loc);
     }
-    abstract Object accept(Visitor visitor);
 }
+
+//?? VarSym... whats this!?
+class VarDef extends Stmt {
+    VarId _id;
+    Expr _expr;
+    VarDef(Location loc, VarId id, Expr expr) {
+        super(loc);
+        _id = id;
+        _expr = expr;
+    }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
 
 class BlockStmt extends Stmt {
     List<Stmt> _stmts;
