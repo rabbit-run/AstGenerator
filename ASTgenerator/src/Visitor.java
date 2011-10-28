@@ -14,9 +14,6 @@ abstract class Visitor {
   Object visit(FieldTypeList type) { return defaultVisit(type); }
   Object visit(FieldTypeListTail type) { return defaultVisit(type); }
   Object visit(FieldType type) { return defaultVisit(type); }
-//  Object visit(BoolType ast) { return defaultVisit(ast); }
-//  Object visit(IntType ast) { return defaultVisit(ast); }
-//  Object visit(StringType ast) { return defaultVisit(ast); }
   Object visit(FunType ast) { return defaultVisit(ast); }
 //  Object visit(ReturnType ast) { return defaultVisit(ast); }
 //  Object visit(VoidType ast) { return defaultVisit(ast); }
@@ -60,17 +57,17 @@ abstract class Visitor {
 //  Object visit(SubScriptExprTail ast) { return defaultVisit(ast); }
   Object visit(ExprList ast) { return defaultVisit(ast); }
   Object visit(ExprListTail ast) { return defaultVisit(ast); }
-//  Object visit(PrimExpr ast) { return defaultVisit(ast); }
-//  Object visit(ParenExpr ast) { return defaultVisit(ast); }
-//  
-//  Object visit(ArrayLit ast) { return defaultVisit(ast); }
-//  Object visit(RecordLit ast) { return defaultVisit(ast); }
-//  Object visit(FieldLitList ast) { return defaultVisit(ast); }
-//  Object visit(FieldLitListTail ast) { return defaultVisit(ast); }
-//  Object visit(FieldLit ast) { return defaultVisit(ast); }
+  Object visit(PrimExpr ast) { return defaultVisit(ast); }
+  Object visit(ParenExpr ast) { return defaultVisit(ast); }
+  
+  Object visit(ArrayLit ast) { return defaultVisit(ast); }
+  Object visit(RecordLit ast) { return defaultVisit(ast); }
+  Object visit(FieldLitList ast) { return defaultVisit(ast); }
+  Object visit(FieldLitListTail ast) { return defaultVisit(ast); }
+  Object visit(FieldLit ast) { return defaultVisit(ast); }
   Object visit(BoolLit ast) { return defaultVisit(ast); }
   Object visit(IntLit ast) { return defaultVisit(ast); }
-//  Object visit(NullLit ast) { return defaultVisit(ast); }
+  Object visit(NullLit ast) { return defaultVisit(ast); }
   Object visit(StringLit ast) { return defaultVisit(ast); }
   Object visit(FieldId ast) { return defaultVisit(ast); }
   Object visit(FunId ast) { return defaultVisit(ast); }

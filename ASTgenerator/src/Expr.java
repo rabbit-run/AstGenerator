@@ -280,6 +280,70 @@ class FunId extends Expr {
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 
+class ParenExpr extends PrimExpr {
+    Expr _expr;
+    ParenExpr (Location loc, Expr expr){
+        super(loc);
+        _expr = expr;
+    }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
+class ArrayLit extends PrimExpr {
+    List<Expr> _exprs;
+    ExprList _raw;
+    ArrayLit (Location loc, ExprList exprs){
+        super(loc);
+        _raw = exprs;
+    }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
+class RecordLit extends PrimExpr {
+    List<FieldLit> _fields;
+    FieldLitList _raw;
+    RecordLit (Location loc, FieldLitList fields){
+        super(loc);
+        _raw = fields;
+    }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
+class FieldLitList extends Expr {
+    FieldLit _first;
+    FieldLitListTail _tail;
+    
+    FieldLitList(Location loc) {
+        super(loc);
+        _first = null;
+        _tail = null;
+    }
+    FieldLitList(Location loc, FieldLit first, FieldLitListTail tail) {
+        super(loc);
+        _first = first;
+        _tail = tail;
+    }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
+class FieldLitListTail extends Expr {
+    List<FieldLit> _inh;
+    FieldLit _next;
+    FieldLitListTail _tail;
+    
+    FieldLitListTail(Location loc) {
+        super(loc);
+        _next = null;
+        _tail = null;
+    }
+    FieldLitListTail(Location loc, FieldLit next, FieldLitListTail tail) {
+        super(loc);
+        _next = next;
+        _tail = tail;
+    }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
 class StringLit extends PrimExpr {
     String _value;
     StringLit(Location loc, String value) { super(loc); _value = value; }
@@ -297,6 +361,13 @@ class BoolLit extends PrimExpr {
     BoolLit(Location loc, String value) { super(loc); _value = value; }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
+
+class NullLit extends PrimExpr {
+    String _value;
+    NullLit(Location loc, String value) { super(loc); _value = value; }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
 
 class ExprList extends AstNode {
     Expr _first;

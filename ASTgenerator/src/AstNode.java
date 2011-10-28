@@ -86,6 +86,17 @@ class FunDefListTail extends AstNode {
     }
 }
 
+class FieldLit extends AstNode {
+    FieldId _id;
+    Expr _expr;
+    FieldLit (Location loc, FieldId id, Expr expr){
+        super(loc);
+        _id = id;
+        _expr = expr;
+    }
+    Object accept(Visitor visitor) { return visitor.visit(this); }
+}
+
 class FieldId extends AstNode {
     String _id;
 

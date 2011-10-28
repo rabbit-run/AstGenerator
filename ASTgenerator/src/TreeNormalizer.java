@@ -128,6 +128,11 @@ class TreeNormalizer extends Visitor {
     
 //------------------------Expr---------------------------------
     
+    Object visit(ParenExpr ast) {
+        ast._expr = (Expr) ast._expr.accept(this);
+        return ast;
+    }
+
     Object visit(CallExpr ast) {
         ast._id = (FunId) ast._id.accept(this);
         ast._exprs = (List<Expr>)ast._call.accept(this);
@@ -274,6 +279,8 @@ class TreeNormalizer extends Visitor {
         return ast._tail.accept(this);
     }
     
+//    --------------------Literals------------------------------
+    
     Object visit(StringLit ast) {
         return ast;
     }
@@ -286,6 +293,45 @@ class TreeNormalizer extends Visitor {
         return ast;
     }
     
+    Object visit(ArrayLit ast) {
+        @SuppressWarnings("unchecked")
+        List<Expr> exprs = (List<Expr>) ast._raw.accept(this);
+        ast._exprs = exprs;
+        ast._raw = null;
+        return ast;
+    }
+
+    Object visit(RecordLit ast) {
+        @SuppressWarnings("unchecked")
+        List<FieldLit> fields = (List<FieldLit>) ast._raw.accept(this);
+        ast._fields = fields;
+        ast._raw = null;
+        return ast;
+    }
+    
+    Object visit(FieldLit ast) {
+        ast._id = (FieldId)ast._id.accept(this);
+        ast._expr = (Expr)ast._expr.accept(this);
+        return ast;
+      }
+    
+    Object visit(FieldLitList ast) {
+        List<FieldLit> result = new ArrayList<FieldLit>();
+        if (null == ast._first)
+            return result;
+        result.add((FieldLit) ast._first.accept(this));
+        ast._tail._inh = result;
+        return ast._tail.accept(this);
+    }
+
+    Object visit(FieldLitListTail ast) {
+        if (null == ast._next)
+            return ast._inh;
+        ast._inh.add((FieldLit) ast._next.accept(this));
+        ast._tail._inh = ast._inh;
+        return ast._tail.accept(this);
+    }
+
     Object visit(VarId ast) {
         return ast;
     }
