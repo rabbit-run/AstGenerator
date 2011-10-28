@@ -29,11 +29,13 @@ class LogicOrExpr extends Expr {
 }
 
 class LogicOrExprTail extends Expr {
+    String _op;
     Expr _head;
     Expr _andExpr;
     LogicOrExprTail _tail;
-    LogicOrExprTail(Location loc, LogicAndExpr andExpr, LogicOrExprTail tail) {
+    LogicOrExprTail(Location loc, String op, LogicAndExpr andExpr, LogicOrExprTail tail) {
         super(loc);
+        _op = op;
         _andExpr = andExpr;
         _tail = tail;
     }
@@ -59,11 +61,13 @@ class LogicAndExpr extends Expr {
 }
 
 class LogicAndExprTail extends Expr {
+    String _op;
     Expr _head;
     Expr _eqExpr;
     LogicAndExprTail _tail;
-    LogicAndExprTail(Location loc, EqExpr eqExpr, LogicAndExprTail tail) {
+    LogicAndExprTail(Location loc, String op, EqExpr eqExpr, LogicAndExprTail tail) {
         super(loc);
+        _op = op;
         _eqExpr = eqExpr;
         _tail = tail;
     }
@@ -76,24 +80,24 @@ class LogicAndExprTail extends Expr {
 }
 
 class EqExpr extends Expr {
-    InfixExpr _infix;
     RelExpr _relExpr;
     EqExprTail _tail;
     EqExpr(Location loc, RelExpr relExpr, EqExprTail tail) {
         super(loc);
         _relExpr = relExpr;
         _tail = tail;
-        _infix = null;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 
 class EqExprTail extends Expr {
+    String _op;
     Expr _head;
     Expr _relExpr;
     EqExprTail _tail;
-    EqExprTail(Location loc, RelExpr relExpr, EqExprTail tail) {
+    EqExprTail(Location loc,String op,  RelExpr relExpr, EqExprTail tail) {
         super(loc);
+        _op = op;
         _relExpr = relExpr;
         _tail = tail;
     }
@@ -106,24 +110,24 @@ class EqExprTail extends Expr {
 }
 
 class RelExpr extends Expr {
-    InfixExpr _infix;
     AddExpr _addExpr;
     RelExprTail _tail;
     RelExpr(Location loc, AddExpr addExpr, RelExprTail tail) {
         super(loc);
         _addExpr = addExpr;
         _tail = tail;
-        _infix = null;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
 
 class RelExprTail extends Expr {
+    String _op;
     Expr _head;
     Expr _addExpr;
     RelExprTail _tail;
-    RelExprTail(Location loc, AddExpr addExpr, RelExprTail tail) {
+    RelExprTail(Location loc, String op, AddExpr addExpr, RelExprTail tail) {
         super(loc);
+        _op = op;
         _addExpr = addExpr;
         _tail = tail;
     }
@@ -136,14 +140,12 @@ class RelExprTail extends Expr {
 }
 
 class AddExpr extends Expr {
-    InfixExpr _infix;
     MultExpr _multExpr;
     AddExprTail _tail;
     AddExpr(Location loc, MultExpr multExpr, AddExprTail tail) {
         super(loc);
         _multExpr = multExpr;
         _tail = tail;
-        _infix = null;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }
@@ -169,14 +171,12 @@ class AddExprTail extends Expr {
 }
 
 class MultExpr extends Expr {
-    InfixExpr _infix;
     PrimExpr _prefixExpr;
     MultExprTail _tail;
     MultExpr(Location loc, PrimExpr prefixExpr, MultExprTail tail) {
         super(loc);
         _prefixExpr = prefixExpr;
         _tail = tail;
-        _infix = null;
     }
     Object accept(Visitor visitor) { return visitor.visit(this); }
 }

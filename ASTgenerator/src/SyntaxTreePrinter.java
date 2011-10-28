@@ -125,7 +125,10 @@ class SyntaxTreePrinter extends Visitor {
     }
 
     // -----------------Expr--------------------------
-
+    Object visit(Expr ast) {
+        return begin(ast).end(ast);
+    }
+    
     Object visit(FunId ast) {
         return begin(ast, ast._id).end(ast);
     }
@@ -236,11 +239,12 @@ class SyntaxTreePrinter extends Visitor {
     
     Object visit(EqExpr ast) {
         begin(ast);
-        if (ast._relExpr != null)
+        if (ast._relExpr != null){
             p(ast._relExpr);
-        if (ast._tail != null) {
-            p(ast._tail);
         }
+        if (ast._tail != null) 
+            p(ast._tail);
+        
         return end(ast);
     }
     
@@ -317,7 +321,8 @@ class SyntaxTreePrinter extends Visitor {
     Object visit(VarDef ast) {
         begin(ast);
         p(ast._id);
-        p(ast._expr);
+        if (ast._expr != null)
+            p(ast._expr);
         return end(ast);
     }
     

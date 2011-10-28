@@ -42,6 +42,7 @@ abstract class Visitor {
   Object visit(LogicAndExprTail ast) { return defaultVisit(ast); }
   Object visit(RelExpr ast) { return defaultVisit(ast); }
   Object visit(EqExprTail ast) { return defaultVisit(ast); }
+  Object visit(EqExpr ast) { return defaultVisit(ast); }
   Object visit(RelExprTail ast) { return defaultVisit(ast); }
   Object visit(AddExpr ast) { return defaultVisit(ast); }
   Object visit(AddExprTail ast) { return defaultVisit(ast); }
